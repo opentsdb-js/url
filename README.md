@@ -16,7 +16,7 @@ $ npm install opentsdb-url
 For use in the browser, use [browserify](https://github.com/substack/node-browserify).
 
 
-### URL
+### Usage
 
 To use the module,
 
@@ -24,7 +24,7 @@ To use the module,
 var getURL = require( 'opentsdb-url' );
 ```
 
-A URL generator is bound to a particular OpenTSDB [client](https://github.com/opentsdb-js/client) instance.
+A URL generator must be bound to a particular OpenTSDB [client](https://github.com/opentsdb-js/client) instance.
 
 ``` javascript
 var createClient = require( 'opentsdb-client' );
@@ -57,10 +57,14 @@ url.create();
 // returns '...'
 ```
 
+Note: Ensure that you have first generated a template __before__ trying to create a URL.
+
+The motivation for the `template`/`create` separation is the recognition that `start` and `end` times are more likely to change than other `client` parameters, particularly when periodically polling OpenTSDB for data belonging to the same metric. 
+
 
 ## Examples
 
-To run the example code from the top-level application,
+To run the example code from the top-level application directory,
 
 ``` bash
 $ node ./examples/index.js
