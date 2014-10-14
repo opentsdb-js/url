@@ -111,8 +111,8 @@ $ make view-cov
 Copyright &copy; 2014. Athan Reines.
 
 
-[npm-image]: http://img.shields.io/npm/v/url.svg
-[npm-url]: https://npmjs.org/package/url
+[npm-image]: http://img.shields.io/npm/v/opentsdb-url.svg
+[npm-url]: https://npmjs.org/package/opentsdb-url
 
 [travis-image]: http://img.shields.io/travis/opentsdb-js/url/master.svg
 [travis-url]: https://travis-ci.org/opentsdb-js/url
