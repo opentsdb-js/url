@@ -12,7 +12,7 @@ var // Expectation library:
 	createClient = require( 'opentsdb-client' ),
 
 	// Module to be tested:
-	getURL = require( './../lib' );
+	createFactory = require( './../lib' );
 
 
 // VARIABLES //
@@ -27,13 +27,13 @@ describe( 'opentsdb-url', function tests() {
 	'use strict';
 
 	it( 'should export a factory function', function test() {
-		expect( getURL ).to.be.a( 'function' );
+		expect( createFactory ).to.be.a( 'function' );
 	});
 
 	it( 'should throw an error if no Client instance is provided', function test() {
 		expect( run ).to.throw( Error );
 		function run() {
-			getURL();
+			createFactory();
 		}
 	});
 
@@ -42,7 +42,7 @@ describe( 'opentsdb-url', function tests() {
 
 		it( 'should provide a method to generate a request URL template', function test() {
 			var client = createClient(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			expect( url.template ).to.be.a( 'function' );
 		});
@@ -116,7 +116,7 @@ describe( 'opentsdb-url', function tests() {
 
 		it( 'should provide a method to create a request URL', function test() {
 			var client = createClient(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			expect( url.create ).to.be.a( 'function' );
 		});
@@ -124,7 +124,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should return a request URL', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			setClient( client, query );
@@ -163,7 +163,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not return a URL which includes a counterMax parameter in the URL if the value is set to null', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			query.rateOptions({'counterMax': null});
@@ -178,7 +178,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not return a URL which includes a rate parameter in the URL if the value is set to false', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			query.rate( false );
@@ -193,7 +193,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not return a URL which includes a downsample parameter if the value is set to null', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			query.downsample( null );
@@ -209,7 +209,7 @@ describe( 'opentsdb-url', function tests() {
 			var client = createClient(),
 				query1 = mQuery(),
 				query2 = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query1 );
 			setMetricQuery( query2 );
@@ -228,7 +228,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not return a URL which includes a tag parameter if none exist', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			query.dtag( 'nid' );
@@ -244,7 +244,7 @@ describe( 'opentsdb-url', function tests() {
 			var client = createClient(),
 				query = mQuery(),
 				tags, keys,
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			query.tags( 'foo', 'bar' );
@@ -264,7 +264,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not include a metric name or tags when encoding a TSUID query', function test() {
 			var client = createClient(),
 				query = tQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setTSUIDsQuery( query );
 			setClient( client, query );
@@ -283,7 +283,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should not include an end time if none is specified', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client );
+				url = createFactory( client );
 
 			setMetricQuery( query );
 			setClient( client, query );
@@ -300,7 +300,7 @@ describe( 'opentsdb-url', function tests() {
 		it( 'should properly encode annotations preferences', function test() {
 			var client = createClient(),
 				query = mQuery(),
-				url = getURL( client ),
+				url = createFactory( client ),
 				_url;
 
 			setMetricQuery( query );

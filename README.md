@@ -21,7 +21,7 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var getURL = require( 'url' );
+var createFactory = require( 'url' );
 ```
 
 A URL generator must be bound to a particular OpenTSDB [client](https://github.com/opentsdb-js/client) instance.
@@ -33,7 +33,7 @@ var createClient = require( 'opentsdb-client' );
 var client = createClient();
 
 // Bind the generator to the client:
-var url = getURL( client );
+var url = createFactory( client );
 ```
 
 The instance has the following methods...
@@ -46,6 +46,8 @@ Creates a URL template based on the OpenTSDB client configuration. The template 
 ``` javascript
 url.template();
 ``` 
+
+Note: this method does not provide public access to the URL template. Instead, the method returns the current URL generator instance.
 
 
 #### url.create()
@@ -63,6 +65,50 @@ The motivation for the `template`/`create` separation is the recognition that `s
 
 
 ## Examples
+
+``` javascript
+var createClient = require( 'opentsdb-client' ),
+	mQuery = require( 'opentsdb-mquery' ),
+	createFactory = require( 'opentsdb-url' ),
+	start = Date.now(),
+	end = start + 1000,
+	client,
+	query,
+	url;
+
+// Create a new metric query and configure:
+query = mQuery();
+
+query.metric( 'cpu.utilization' )
+	.tags( 'beep', 'boop' );
+
+// Create a new client and configure:
+client = createClient();
+
+client.queries( query );
+
+// Bind the client to a URL generator:
+url = createFactory( client );
+
+// Create the url template:
+url.template();
+
+// Periodically create new URLs...
+for ( var i = 0; i < 10; i++ ) {
+	setTimeout( createURL( i*1000 ), 1000 );
+}
+
+function createURL( offset ) {
+	var begin = start + offset,
+		stop = end + offset;
+	return function onTimeout() {
+		client.start( begin )
+			.end( stop );
+
+		console.log( url.create() );
+	};
+}
+```
 
 To run the example code from the top-level application directory,
 

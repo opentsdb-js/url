@@ -39,7 +39,7 @@
 		tQuery = require( 'opentsdb-tquery' ),
 
 		// URL generator:
-		getURL = require( './../lib' );
+		createFactory = require( './../lib' );
 
 
 	// VARIABLES //
@@ -129,12 +129,16 @@
 	} // end FUNCTION setClient()
 
 
-	// SCRIPT //
+	// VARIABLES //
 
 	var client,
+		query,
 		query1,
 		query2,
 		url;
+
+
+	// EXAMPLE 1 //
 
 	// Create a new client:
 	client = createClient();
@@ -146,7 +150,7 @@
 	query2 = tQuery();
 
 	// Create a new URL generator:
-	url = getURL( client );
+	url = createFactory( client );
 
 	// Set the queries and client:
 	setMetricQuery( query1 );
@@ -155,5 +159,40 @@
 
 	// Create the request URL:
 	console.log( url.template().create() );
+
+
+	// EXAMPLE 2 //
+
+	// Create a new metric query:
+	query = mQuery();
+	
+	query.metric( 'cpu.utilization' )
+		.tags( 'beep', 'boop' );
+
+	// Create a new client and configure:
+	client = createClient();
+
+	client.queries( query );
+
+	// Bind the client to a URL generator:
+	url = createFactory( client );
+
+	// Create the url template:
+	url.template();
+
+	// Periodically create new URLs...
+	for ( var i = 0; i < 10; i++ ) {
+		setTimeout( createURL( i*1000 ), 1000 );
+	}
+
+	function createURL( offset ) {
+		var begin = start + offset,
+			stop = end + offset;
+		return function onTimeout() {
+			client.start( begin )
+				.end( stop );
+			console.log( url.create() );
+		};
+	}
 
 })();
