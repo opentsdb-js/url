@@ -10,7 +10,7 @@ URL
 For use in Node.js,
 
 ``` bash
-$ npm install opentsdb-url
+$ npm install url
 ```
 
 For use in the browser, use [browserify](https://github.com/substack/node-browserify).
@@ -21,7 +21,7 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var getURL = require( 'opentsdb-url' );
+var getURL = require( 'url' );
 ```
 
 A URL generator must be bound to a particular OpenTSDB [client](https://github.com/opentsdb-js/client) instance.
@@ -33,7 +33,7 @@ var createClient = require( 'opentsdb-client' );
 var client = createClient();
 
 // Bind the generator to the client:
-var url = new getURL( client );
+var url = getURL( client );
 ```
 
 The instance has the following methods...
@@ -111,20 +111,20 @@ $ make view-cov
 Copyright &copy; 2014. Athan Reines.
 
 
-[npm-image]: http://img.shields.io/npm/v/opentsdb-url.svg
-[npm-url]: https://npmjs.org/package/opentsdb-url
+[npm-image]: http://img.shields.io/npm/v/url.svg
+[npm-url]: https://npmjs.org/package/url
 
-[travis-image]: http://img.shields.io/travis/opentsdb-js/opentsdb-url/master.svg
-[travis-url]: https://travis-ci.org/opentsdb-js/opentsdb-url
+[travis-image]: http://img.shields.io/travis/opentsdb-js/url/master.svg
+[travis-url]: https://travis-ci.org/opentsdb-js/url
 
-[coveralls-image]: https://img.shields.io/coveralls/opentsdb-js/opentsdb-url/master.svg
-[coveralls-url]: https://coveralls.io/r/opentsdb-js/opentsdb-url?branch=master
+[coveralls-image]: https://img.shields.io/coveralls/opentsdb-js/url/master.svg
+[coveralls-url]: https://coveralls.io/r/opentsdb-js/url?branch=master
 
-[dependencies-image]: http://img.shields.io/david/opentsdb-js/opentsdb-url.svg
-[dependencies-url]: https://david-dm.org/opentsdb-js/opentsdb-url
+[dependencies-image]: http://img.shields.io/david/opentsdb-js/url.svg
+[dependencies-url]: https://david-dm.org/opentsdb-js/url
 
-[dev-dependencies-image]: http://img.shields.io/david/dev/opentsdb-js/opentsdb-url.svg
-[dev-dependencies-url]: https://david-dm.org/dev/opentsdb-js/opentsdb-url
+[dev-dependencies-image]: http://img.shields.io/david/dev/opentsdb-js/url.svg
+[dev-dependencies-url]: https://david-dm.org/dev/opentsdb-js/url
 
-[github-issues-image]: http://img.shields.io/github/issues/opentsdb-js/opentsdb-url.svg
-[github-issues-url]: https://github.com/opentsdb-js/opentsdb-url/issues
+[github-issues-image]: http://img.shields.io/github/issues/opentsdb-js/url.svg
+[github-issues-url]: https://github.com/opentsdb-js/url/issues
