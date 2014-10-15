@@ -26,6 +26,73 @@ var expect = chai.expect,
 describe( 'opentsdb-url', function tests() {
 	'use strict';
 
+	// SETUP //
+
+	var // Settings:
+		start = Date.now(),
+		end = start + 1000,
+		ms = false,
+		arrays = false,
+		tsuids = true,
+		annotations = 'local',
+
+		// Query:
+		aggregator = 'sum',
+		downsample = '5m-avg',
+		rate = true,
+		counter = true,
+		counterMax = 10000,
+		resetValue = 5,
+		tags = {
+			'nid': '*'
+		},
+		metric = 'cpu.utilization',
+		ids = '0010120010,0010013100';
+
+	function setMetricQuery( query ) {
+		query.metric( metric )
+			.aggregator( aggregator )
+			.downsample( downsample )
+			.rate( rate )
+			.rateOptions({
+				'counter': counter,
+				'counterMax': counterMax,
+				'resetValue': resetValue
+			})
+			.tags( 'nid', tags.nid );
+	} // end FUNCTION setMetricQuery()
+
+	function setTSUIDsQuery( query ) {
+		query.tsuids( ids )
+			.aggregator( aggregator )
+			.downsample( downsample )
+			.rate( rate )
+			.rateOptions({
+				'counter': counter,
+				'counterMax': counterMax,
+				'resetValue': resetValue
+			});
+	} // end FUNCTION setTSUIDsQuery()
+
+	function setClient() {
+		var client = arguments[ 0 ],
+			queries = Array.prototype.slice.apply( arguments );
+
+		client.start( start )
+			.end( end )
+			.ms( ms )
+			.arrays( arrays )
+			.tsuids( tsuids )
+			.annotations( annotations );
+
+		queries.shift();
+		
+		client.queries.apply( client, queries );
+	} // end FUNCTION setClient()
+
+
+	// TESTS //
+
 	it( 'should export a factory function', function test() {
 		expect( createFactory ).to.be.a( 'function' );
 	});
@@ -47,72 +114,21 @@ describe( 'opentsdb-url', function tests() {
 			expect( url.template ).to.be.a( 'function' );
 		});
 
+		it( 'should throw an error if a query does not have either TSUIDs or a metric', function test() {
+			var client = createClient(),
+				query = mQuery(),
+				url = createFactory( client );
+
+			expect( foo ).to.throw( Error );
+			function foo() {
+				setClient( client, query );
+				url.template();
+			}
+		});
+
 	});
 
 	describe( 'api/create', function tests() {
-
-		var // Settings:
-			start = Date.now(),
-			end = start + 1000,
-			ms = false,
-			arrays = false,
-			tsuids = true,
-			annotations = 'local',
-
-			// Query:
-			aggregator = 'sum',
-			downsample = '5m-avg',
-			rate = true,
-			counter = true,
-			counterMax = 10000,
-			resetValue = 5,
-			tags = {
-				'nid': '*'
-			},
-			metric = 'cpu.utilization',
-			ids = '0010120010,0010013100';
-
-		function setMetricQuery( query ) {
-			query.metric( metric )
-				.aggregator( aggregator )
-				.downsample( downsample )
-				.rate( rate )
-				.rateOptions({
-					'counter': counter,
-					'counterMax': counterMax,
-					'resetValue': resetValue
-				})
-				.tags( 'nid', tags.nid );
-		} // end FUNCTION setMetricQuery()
-
-		function setTSUIDsQuery( query ) {
-			query.tsuids( ids )
-				.aggregator( aggregator )
-				.downsample( downsample )
-				.rate( rate )
-				.rateOptions({
-					'counter': counter,
-					'counterMax': counterMax,
-					'resetValue': resetValue
-				});
-		} // end FUNCTION setTSUIDsQuery()
-
-		function setClient() {
-			var client = arguments[ 0 ],
-				queries = Array.prototype.slice.apply( arguments );
-
-			client.start( start )
-				.end( end )
-				.ms( ms )
-				.arrays( arrays )
-				.tsuids( tsuids )
-				.annotations( annotations );
-
-			queries.shift();
-				
-			client.queries.apply( client, queries );
-		} // end FUNCTION setClient()
-
 
 		it( 'should provide a method to create a request URL', function test() {
 			var client = createClient(),

@@ -45,8 +45,8 @@
 	// VARIABLES //
 
 	var // Settings:
-		start = Date.now(),
-		end = start + 1000,
+		end = Date.now(),
+		start = end - 1000,
 		ms = false,
 		arrays = false,
 		tsuids = true,
@@ -165,7 +165,7 @@
 
 	// Create a new metric query:
 	query = mQuery();
-	
+
 	query.metric( 'cpu.utilization' )
 		.tags( 'beep', 'boop' );
 

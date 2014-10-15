@@ -70,8 +70,8 @@ The motivation for the `template`/`create` separation is the recognition that `s
 var createClient = require( 'opentsdb-client' ),
 	mQuery = require( 'opentsdb-mquery' ),
 	createFactory = require( 'opentsdb-url' ),
-	start = Date.now(),
-	end = start + 1000,
+	end = Date.now(),
+	start = end - 1000,
 	client,
 	query,
 	url;
