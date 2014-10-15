@@ -182,7 +182,7 @@
 
 	// Periodically create new URLs...
 	for ( var i = 0; i < 10; i++ ) {
-		setTimeout( createURL( i*1000 ), 1000 );
+		setTimeout( createURL( i*1000 ), i*1000 );
 	}
 
 	function createURL( offset ) {
