@@ -10,7 +10,7 @@ URL
 For use in Node.js,
 
 ``` bash
-$ npm install url
+$ npm install opentsdb-url
 ```
 
 For use in the browser, use [browserify](https://github.com/substack/node-browserify).
@@ -21,7 +21,7 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var createFactory = require( 'url' );
+var createFactory = require( 'opentsdb-url' );
 ```
 
 A URL generator must be bound to a particular OpenTSDB [client](https://github.com/opentsdb-js/client) instance.

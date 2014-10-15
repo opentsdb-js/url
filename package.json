@@ -29,11 +29,13 @@
     "query",
     "url"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "opentsdb-mquery": "0.0.0",
+    "opentsdb-tquery": "0.0.1"
+  },
   "devDependencies": {
     "chai": "1.x.x",
     "coveralls": "^2.11.1",
-    "express": "^4.6.1",
     "istanbul": "^0.3.0",
     "mocha": "1.x.x"
   },
