@@ -312,6 +312,24 @@ describe( 'opentsdb-url', function tests() {
 
 			assert.notOk( new RegExp( '&end=' ).test( url ), 'Incorrectly contains an end time parameter.' );
 		});
+		
+		it( 'should include an end time if end is a string', function test() {
+			var client = createClient(),
+				query = mQuery(),
+				url = createFactory( client ),
+				end = '2010/12/23-07:54:25';
+
+			setMetricQuery( query );
+			setClient( client, query );
+
+			// Absolute end time:
+			client.end( end );
+			
+			url = url.template()
+				.create();
+				
+			assert.ok( new RegExp( 'end='+end ).test( url ), 'Does not contain end time.' );
+		});
 
 		it( 'should properly encode annotations preferences', function test() {
 			var client = createClient(),
