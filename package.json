@@ -1,6 +1,6 @@
 {
   "name": "opentsdb-url",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "OpenTSDB HTTP data request URL generator.",
   "author": {
     "name": "Athan Reines",
